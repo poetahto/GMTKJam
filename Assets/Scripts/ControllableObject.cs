@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 // Represents the player that will move around and interact with the 
@@ -8,7 +9,7 @@ using UnityEngine;
 // the Update and FixedUpdate methods, most of the stuff there
 // is explained with comments.
 
-public abstract class ControllableObject : MonoBehaviour
+public class ControllableObject : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody body;
@@ -17,6 +18,8 @@ public abstract class ControllableObject : MonoBehaviour
     private ControllableProperties properties;
 
     private bool OnGround => _groundContactCount > 0;
+    public Vector3 Velocity => body.velocity;
+    public Vector3 CameraOffset => properties.cameraOffset;
     
     private bool _desiredJump;
     private float _minNormalY;
@@ -27,17 +30,14 @@ public abstract class ControllableObject : MonoBehaviour
     private Vector3 _connectionWorldPosition, _connectionLocalPosition;
     private Vector3 _contactNormal;
 
-    private void Start()
+    private void Awake()
     {
         _minNormalY = Mathf.Cos(properties.maxGroundAngle * Mathf.Deg2Rad);
     }
 
+    
     private void FixedUpdate()
     {
-        /*
-            accelerate towards the desiredVelocity by a fixed amount every fixed
-            update (50 times per second), operates independent of framerate
-        */
         UpdateVelocity();    
     }
 
@@ -51,6 +51,8 @@ public abstract class ControllableObject : MonoBehaviour
         
         _desiredVelocity = (forwardMovement + sidewaysMovement) * properties.maxSpeed;
     }
+
+    public void TryToJump() => _desiredJump = true;
 
     private void UpdateVelocity()
     {
@@ -104,9 +106,7 @@ public abstract class ControllableObject : MonoBehaviour
     private void Jump()
     {
         if (properties.maxAirJumps < 0)
-        {
             return;
-        }
 
         if (OnGround || _usedJumps < properties.maxAirJumps)
         {
