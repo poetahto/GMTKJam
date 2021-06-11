@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraOffset: {x: 0, y: 0, z: 0}
   maxSpeed: 5
-  groundAcceleration: 26
+  groundAcceleration: 23
   airAcceleration: 8
   maxAirJumps: 2
   jumpHeight: 1
