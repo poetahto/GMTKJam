@@ -13,25 +13,32 @@ public class Controller : MonoBehaviour
 
     [SerializeField] 
     private ControllableObject currentlyControlling;
-    
-    [SerializeField]
-    private float cameraMoveSpeed = 0.01f;
 
+    [SerializeField] 
+    private float transitionDuration = 0.25f;
+    
     private Tweener _controllableTransition;
     
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        
+
         if (currentlyControlling != null)
+        {
+            transform.position = currentlyControlling.transform.position + currentlyControlling.CameraOffset;
             AttachTo(currentlyControlling);
+        }
     }
 
     private void Update()
     {
-        HandleKeyboardInput();
         HandleMouseInput();
-        UpdateCameraPos();
+
+        if (!_controllableTransition.IsActive())
+        {
+            UpdateCameraPos();
+            HandleKeyboardInput();
+        }
     }
 
     private void HandleKeyboardInput()
@@ -44,6 +51,15 @@ public class Controller : MonoBehaviour
         
         if (Input.GetButtonDown("Jump"))
             currentlyControlling.TryToJump();
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out var hit) && hit.transform != transform)
+            {
+                var obj = hit.transform.GetComponent<ControllableObject>();
+                AttachTo(obj);
+            }
+        }
     }
 
     private void AttachTo(ControllableObject obj)
@@ -51,11 +67,13 @@ public class Controller : MonoBehaviour
         if (obj != null)
         {
             Time.timeScale = 0.5f;
+            currentlyControlling.SetMovementDirection(Vector2.zero);
             currentlyControlling = obj;
             _controllableTransition?.Kill();
             
             _controllableTransition = controllerCamera.transform
-                .DOMove(obj.transform.position + obj.CameraOffset, 0.25f)
+                .DOMove(obj.transform.position + obj.CameraOffset, transitionDuration)
+                .SetUpdate(true)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() => Time.timeScale = 1f);
         }
@@ -67,9 +85,8 @@ public class Controller : MonoBehaviour
 
         Vector3 cameraPos = controllerCamera.transform.position;
         Vector3 controllerPos = currentlyControlling.transform.position;
-
-        float velocityChange = Mathf.Max(currentlyControlling.Velocity.magnitude * Time.deltaTime, cameraMoveSpeed);
-
+        float velocityChange = currentlyControlling.Velocity.magnitude * Time.deltaTime;
+        
         cameraPos.x = Mathf.MoveTowards(
             cameraPos.x, 
             controllerPos.x + currentlyControlling.CameraOffset.x, 

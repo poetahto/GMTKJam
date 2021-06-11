@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dac6103b8934d54bd97cbf93367513b, type: 3}
-  m_Name: Player
+  m_Name: Big Guy
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 0, y: 0.5, z: 0}
-  maxSpeed: 4
-  groundAcceleration: 26
-  airAcceleration: 4
-  maxAirJumps: 0
-  jumpHeight: 1
+  cameraOffset: {x: 0, y: 1.8, z: 0}
+  maxSpeed: 2
+  groundAcceleration: 16
+  airAcceleration: 2
+  maxAirJumps: -1
+  jumpHeight: 0
   maxGroundAngle: 30
