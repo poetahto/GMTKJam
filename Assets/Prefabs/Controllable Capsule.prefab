@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 6722907866312033923}
   properties: {fileID: 11400000, guid: 0da99d06482c33a4881b422b455e89c1, type: 2}
+  objectRenderer: {fileID: 6722907866312033926}
   onAttached:
     m_PersistentCalls:
       m_Calls:
@@ -173,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6704a0a319e547e3a3e6d1b6f3caa7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 6722907866312033926}
   lookStrength: 0.99
   onLookChanged:
     m_PersistentCalls:
@@ -189,7 +191,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  readonlySim: 0
 --- !u!114 &-9091908355887655509
 MonoBehaviour:
   m_ObjectHideFlags: 0

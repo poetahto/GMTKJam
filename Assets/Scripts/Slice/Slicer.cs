@@ -39,6 +39,7 @@ namespace Assets.Scripts.Slice
             negativeObject.name = string.Format("{0}_negative", objectToCut.name);
 
             var positiveSideMeshData = slicesMeta.PositiveSideMesh;
+            positiveSideMeshData.RecalculateBounds();
             var negativeSideMeshData = slicesMeta.NegativeSideMesh;
 
             positiveObject.GetComponent<MeshFilter>().mesh = positiveSideMeshData;
@@ -83,6 +84,7 @@ namespace Assets.Scripts.Slice
             if (originalCobj != null)
             {
                 ControllableObject obj = meshGameObject.AddComponent<ControllableObject>();
+                obj.objectRenderer = obj.GetComponent<MeshRenderer>();
                 
                 // ---- FADER SETUP ----
                 ObjectFader fader = meshGameObject.AddComponent<ObjectFader>();
@@ -98,6 +100,7 @@ namespace Assets.Scripts.Slice
                 highlighter.intensity = 4f;
                 highlighter.meshRenderer = meshGameObject.GetComponent<MeshRenderer>();
                 var lookEvent = meshGameObject.AddComponent<LookEvent>();
+                lookEvent.targetRenderer = meshGameObject.GetComponent<MeshRenderer>();
                 lookEvent.lookStrength = 0.99f;
                 lookEvent.onLookChanged.AddListener(highlighter.SetHighlighted);
                 // ---- HIGHLIGHTER SETUP ----

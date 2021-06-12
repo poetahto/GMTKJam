@@ -5,6 +5,9 @@ using UnityEngine.Events;
 public class LookEvent : MonoBehaviour
 {
     [SerializeField] 
+    public Renderer targetRenderer;
+    
+    [SerializeField] 
     public float lookStrength = 0.75f;
 
     [SerializeField] 
@@ -23,16 +26,13 @@ public class LookEvent : MonoBehaviour
         CompareDirections();
     }
 
-    public float readonlySim = 0f;
-    
     private void CompareDirections()
     {
         var cameraTransform = _camera.transform;
         Vector3 cameraDirection = cameraTransform.forward;
-        Vector3 directionToCamera = (transform.position - cameraTransform.position).normalized;
+        Vector3 directionToCamera = (targetRenderer.bounds.center - cameraTransform.position).normalized;
 
         float similarity = Vector3.Dot(cameraDirection, directionToCamera);
-        readonlySim = similarity;
         bool isLookedAt = similarity >= lookStrength;
 
         if (isLookedAt != _isLookedAt)

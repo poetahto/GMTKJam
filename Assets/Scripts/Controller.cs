@@ -26,7 +26,7 @@ public class Controller : MonoBehaviour
 
         if (currentlyControlling != null)
         {
-            transform.position = currentlyControlling.transform.position + currentlyControlling.CameraOffset;
+            transform.position = currentlyControlling.objectRenderer.bounds.center + currentlyControlling.CameraOffset;
             AttachTo(currentlyControlling);
         }
     }
@@ -76,7 +76,7 @@ public class Controller : MonoBehaviour
             _controllableTransition?.Kill(true);
             
             _controllableTransition = controllerCamera.transform
-                .DOMove(obj.transform.position + obj.CameraOffset, transitionDuration)
+                .DOMove(obj.objectRenderer.bounds.center + obj.CameraOffset, transitionDuration)
                 .SetUpdate(true)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>
@@ -92,7 +92,7 @@ public class Controller : MonoBehaviour
         // Updates the camera's position every frame to smoothly follow the player around.
 
         Vector3 cameraPos = controllerCamera.transform.position;
-        Vector3 controllerPos = currentlyControlling.transform.position;
+        Vector3 controllerPos = currentlyControlling.objectRenderer.bounds.center;
         float velocityChange = currentlyControlling.Velocity.magnitude * Time.deltaTime;
         
         cameraPos.x = Mathf.MoveTowards(

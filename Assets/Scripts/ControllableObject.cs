@@ -17,6 +17,9 @@ public class ControllableObject : MonoBehaviour
     [SerializeField] 
     public ControllableProperties properties;
 
+    [SerializeField] 
+    public MeshRenderer objectRenderer;
+
     public UnityEvent<bool> onAttached = new UnityEvent<bool>(); 
     
     private bool OnGround => _groundContactCount > 0;
