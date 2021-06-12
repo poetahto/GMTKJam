@@ -18,7 +18,7 @@ public class ObjectFader : MonoBehaviour
 
     private Tweener _fadeAnimation;
 
-    private void Start()
+    private void Awake()
     {
         CreateFadeAnimation(targetRenderer.material);       
     }

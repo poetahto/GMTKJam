@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class WeightDetector : MonoBehaviour
 {
@@ -44,9 +45,9 @@ public class WeightDetector : MonoBehaviour
         _debouncingObjects.Remove(obj);
     }
 
-    private bool ShouldAddWeigher(Collision collision)
+    private static bool ShouldAddWeigher(Collision collision)
     {
-        return collision.rigidbody != null && Vector3.Dot(transform.up, collision.GetContact(0).normal) < 0;
+        return collision.rigidbody != null;
     }
 
     private void AddWeigher(Rigidbody rb)

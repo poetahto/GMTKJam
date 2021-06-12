@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using NaughtyAttributes;
 using UnityEngine;
 
 // represents the player who is controlling the characters in the game
@@ -11,6 +12,9 @@ public class Controller : MonoBehaviour
     [SerializeField] 
     private Camera controllerCamera;
 
+    [Layer, SerializeField] 
+    private int playerLayer;
+    
     [SerializeField] 
     private ControllableObject currentlyControlling;
 
@@ -21,7 +25,7 @@ public class Controller : MonoBehaviour
     private Tweener _controllableTransition;
     private Vector3 _flatForward;
     
-    private void Awake()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         
@@ -59,9 +63,7 @@ public class Controller : MonoBehaviour
         playerInput.Normalize();
 
         var playerTransform = transform;
-        
-        
-        
+
         Vector3 forwardMovement = _flatForward * playerInput.x;
         Vector3 sidewaysMovement = playerTransform.right * playerInput.y;
         currentlyControlling.SetMovementDirection(forwardMovement + sidewaysMovement);
@@ -71,10 +73,13 @@ public class Controller : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out var hit) && hit.transform != transform)
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out var hit, Mathf.Infinity
+            ,~(1 << playerLayer)))
             {
                 var obj = hit.transform.GetComponent<ControllableObject>();
-                AttachTo(obj);
+                
+                if (obj != currentlyControlling)
+                    AttachTo(obj);
             }
         }
     }
@@ -84,12 +89,14 @@ public class Controller : MonoBehaviour
         if (obj != null)
         {
             Time.timeScale = 0.5f;
+            currentlyControlling.gameObject.layer = 0;
             currentlyControlling.SetMovementDirection(Vector2.zero);
             currentlyControlling.body.constraints = _savedConstraints;
             currentlyControlling.onAttached.Invoke(false);
             currentlyControlling = obj;
             currentlyControlling.onAttached.Invoke(true);
             _controllableTransition?.Kill(true);
+            currentlyControlling.gameObject.layer = playerLayer;
             
             _controllableTransition = controllerCamera.transform
                 .DOMove(obj.objectRenderer.bounds.center + obj.CameraOffset, transitionDuration)
