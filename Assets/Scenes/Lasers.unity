@@ -738,7 +738,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6722907866312033920, guid: 1958a1b238526734c91f6014d3015763, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6722907866312033920, guid: 1958a1b238526734c91f6014d3015763, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2259,7 +2259,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5585064395041819461, guid: a3e8db47953fd1847b9dc7882202586f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5585064395041819461, guid: a3e8db47953fd1847b9dc7882202586f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3213,6 +3213,10 @@ PrefabInstance:
     - target: {fileID: 7465500106365138966, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
       propertyPath: m_Name
       value: Controllable Emitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465500106365138967, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 7465500106365138972, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
       propertyPath: m_RootOrder
