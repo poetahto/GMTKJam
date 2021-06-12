@@ -131,5 +131,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 2
   controllerCamera: {fileID: 5585064395041819466}
+  playerLayer: 7
   currentlyControlling: {fileID: 0}
   transitionDuration: 0.5

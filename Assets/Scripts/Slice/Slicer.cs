@@ -90,7 +90,7 @@ namespace Assets.Scripts.Slice
                 ObjectFader fader = meshGameObject.AddComponent<ObjectFader>();
                 fader.targetAlpha = 0;
                 fader.duration = 0.5f;
-                fader.targetRenderer = meshGameObject.GetComponent<MeshRenderer>();
+                fader.targetRenderers = new Renderer[]{meshGameObject.GetComponent<MeshRenderer>()};
                 obj.onAttached.AddListener(fader.SetFading);
                 // ---------------------
                 

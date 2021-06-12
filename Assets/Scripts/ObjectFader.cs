@@ -1,14 +1,11 @@
-﻿using System;
-using Assets.Scripts.Slice;
-using DG.Tweening;
+﻿using DG.Tweening;
 using JetBrains.Annotations;
-using NaughtyAttributes;
 using UnityEngine;
 
 public class ObjectFader : MonoBehaviour
 {
     [SerializeField] 
-    public Renderer targetRenderer;
+    public Renderer[] targetRenderers;
 
     [SerializeField] 
     public float duration;
@@ -16,34 +13,39 @@ public class ObjectFader : MonoBehaviour
     [SerializeField] 
     public float targetAlpha;
 
-    private Tweener _fadeAnimation;
+    private Sequence _fadeSequence;
 
     private void Awake()
     {
-        CreateFadeAnimation(targetRenderer.material);       
+        CreateFadeAnimation();    
     }
 
     private void OnDestroy()
     {
-        _fadeAnimation.Kill();
+        _fadeSequence.Kill();
     }
 
-    private void CreateFadeAnimation(Material material)
+    private void CreateFadeAnimation()
     {
-        _fadeAnimation = material
-            .DOFade(targetAlpha, 1 / duration)
-            .SetSpeedBased()
-            .SetAutoKill(false)
-            .SetUpdate(true)
-            .Pause();
+        _fadeSequence = DOTween.Sequence();
+
+        foreach (var targetRenderer in targetRenderers)
+        {
+            _fadeSequence.Join(targetRenderer.material
+                .DOFade(targetAlpha, 1 / duration)
+                .SetSpeedBased()
+                .SetAutoKill(false)
+                .SetUpdate(true)
+                .Pause());
+        }
     }
 
     [UsedImplicitly]
     public void SetFading(bool fading)
     {
         if (fading)
-            _fadeAnimation.PlayForward();
+            _fadeSequence.PlayForward();
         
-        else _fadeAnimation.PlayBackwards();
+        else _fadeSequence.PlayBackwards();
     }
 }
