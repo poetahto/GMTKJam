@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6722907866312033927}
   - component: {fileID: 6722907866312033923}
   - component: {fileID: 6722907866312033922}
+  - component: {fileID: 8280443247230556903}
+  - component: {fileID: 7307640604417162810}
   m_Layer: 0
   m_Name: Controllable Capsule
   m_TagString: Untagged
@@ -62,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 70d70ca3658998b499412a40af1752d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,3 +130,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 6722907866312033923}
   properties: {fileID: 11400000, guid: 0da99d06482c33a4881b422b455e89c1, type: 2}
+--- !u!114 &8280443247230556903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722907866312033924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c31d4469e84d5d9ed543602291cec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 6722907866312033926}
+  duration: 1
+  intensity: 2
+--- !u!114 &7307640604417162810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722907866312033924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6704a0a319e547e3a3e6d1b6f3caa7ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookStrength: 0.99
+  onLookChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8280443247230556903}
+        m_TargetAssemblyTypeName: ObjectHighlighter, Assembly-CSharp
+        m_MethodName: SetHighlighted
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
