@@ -3566,6 +3566,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5585064395041819463, guid: a3e8db47953fd1847b9dc7882202586f, type: 3}
+      propertyPath: playerLayer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5585064395041819463, guid: a3e8db47953fd1847b9dc7882202586f, type: 3}
       propertyPath: currentlyControlling
       value: 
       objectReference: {fileID: 1114345855}

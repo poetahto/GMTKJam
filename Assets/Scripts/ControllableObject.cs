@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,7 +26,7 @@ public class ControllableObject : MonoBehaviour
     private bool OnGround => _groundContactCount > 0;
     public Vector3 Velocity => body.velocity;
     public Vector3 CameraOffset => properties.cameraOffset;
-    
+
     private bool _desiredJump;
     private float _minNormalY;
     private int _usedJumps;

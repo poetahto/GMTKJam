@@ -117,7 +117,7 @@ public class Controller : MonoBehaviour
 
         Vector3 cameraPos = controllerCamera.transform.position;
         Vector3 controllerPos = currentlyControlling.objectRenderer.bounds.center;
-        float velocityChange = currentlyControlling.Velocity.magnitude * Time.deltaTime;
+        float velocityChange = Mathf.Max(currentlyControlling.Velocity.magnitude * Time.deltaTime, 0.1f);
         
         cameraPos.x = Mathf.MoveTowards(
             cameraPos.x, 
