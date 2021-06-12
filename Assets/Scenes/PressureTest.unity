@@ -592,10 +592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799e5234debb8d45ae3e6e90c9f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRigidbody: {fileID: 0}
-  time: 1
+  duration: 1
   ease: 1
-  defaultVertical: 0.25
+  displacement: -0.2
 --- !u!65 &1592482329
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -716,6 +715,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   maxWeightThreshold: 10
+  debounceSeconds: 0.25
 --- !u!1 &1724408176
 GameObject:
   m_ObjectHideFlags: 0

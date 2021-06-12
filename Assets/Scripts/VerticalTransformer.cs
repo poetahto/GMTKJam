@@ -1,91 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using NaughtyAttributes;
 
 public class VerticalTransformer : MonoBehaviour
 {
-    public Rigidbody targetRigidbody;
-    public float time = 1f;
-    public Ease ease;
-    public float defaultVertical;
+    [SerializeField]
+    private float duration = 1f;
+    
+    [SerializeField]
+    private Ease ease;
+    
+    [SerializeField]
+    private float displacement;
 
-    private Vector3 initialPosition;
+    private Tweener _doorAnimation;
 
-    private bool open;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        open = false;
-        initialPosition = gameObject.transform.position;
-        // defaultVertical = gameObject.transform.localScale.y;
-    }
+        float speed = 1 / duration;
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    [Button]
-    private void TestDoor()
-    {
-        if (IsOpen())
-        {
-            CloseDoor();
-        } else
-        {
-            OpenDoor();
-        }
-    }
-
-    public void SetOpen(bool isOpen)
-    {
-        if (isOpen)
-        {
-            OpenDoor();
-        } else
-        {
-            CloseDoor();
-        }
-    }
-
-    public void OpenDoor() 
-    {
-        if (IsOpen()) return;
-        UpdateOpen(true);
-        Vector3 newPosition = initialPosition - new Vector3(0, defaultVertical, 0);
-        gameObject.transform
-            .DOMove(newPosition, time)
+        _doorAnimation = transform.DOMoveY(transform.position.y + displacement, speed)
             .SetEase(ease)
-            .OnComplete(FullyUpdated);
+            .SetSpeedBased()
+            .SetAutoKill(false)
+            .Pause();
     }
 
-    public void CloseDoor()
+    public void SetOpen(bool open)
     {
-        if (!IsOpen()) return;
-        UpdateOpen(false);
-        gameObject.transform
-            .DOMove(initialPosition, time)
-            .SetEase(ease)
-            .OnComplete(FullyUpdated);
-    }
-
-    private void UpdateOpen(bool update) 
-    {
-        this.open = update;
-        //events
-    }
-
-    private void FullyUpdated()
-    {
-        //more events
-    }
-
-    public bool IsOpen()
-    {
-        return open;
+        if (open)
+            _doorAnimation.PlayForward();
+        
+        else _doorAnimation.PlayBackwards();
     }
 }
