@@ -15,7 +15,7 @@ public class ObjectFader : MonoBehaviour
 
     private Tweener[] _fadeSequences;
 
-    private void Awake()
+    private void Start()
     {
         CreateFadeAnimation();    
     }
