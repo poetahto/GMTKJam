@@ -2038,6 +2038,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202253140}
   m_CullTransparentMesh: 1
+--- !u!20 &1293656812 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5585064395041819466, guid: a3e8db47953fd1847b9dc7882202586f, type: 3}
+  m_PrefabInstance: {fileID: 1456295274}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1324198606
 Mesh:
   m_ObjectHideFlags: 0
@@ -3174,13 +3179,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 423425721, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
+      propertyPath: targetCamera
+      value: 
+      objectReference: {fileID: 1293656812}
     - target: {fileID: 7465500104726849592, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0000005960467
-      objectReference: {fileID: 0}
-    - target: {fileID: 7465500104726849592, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7465500104726849592, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3213,10 +3218,6 @@ PrefabInstance:
     - target: {fileID: 7465500106365138966, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
       propertyPath: m_Name
       value: Controllable Emitter
-      objectReference: {fileID: 0}
-    - target: {fileID: 7465500106365138967, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
-      propertyPath: m_Constraints
-      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 7465500106365138972, guid: 41541adc1f805e345922b0da5d45a771, type: 3}
       propertyPath: m_RootOrder

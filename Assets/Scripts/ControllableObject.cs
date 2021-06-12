@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 
 // Represents the player that will move around and interact with the 
