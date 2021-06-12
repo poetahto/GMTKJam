@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 // Represents the player that will move around and interact with the 
 // game world. A pretty hefty class, might need to be abstracted if
@@ -16,6 +17,8 @@ public class ControllableObject : MonoBehaviour
     [SerializeField] 
     public ControllableProperties properties;
 
+    public UnityEvent<bool> onAttached = new UnityEvent<bool>(); 
+    
     private bool OnGround => _groundContactCount > 0;
     public Vector3 Velocity => body.velocity;
     public Vector3 CameraOffset => properties.cameraOffset;
@@ -29,12 +32,11 @@ public class ControllableObject : MonoBehaviour
     private Vector3 _connectionWorldPosition, _connectionLocalPosition;
     private Vector3 _contactNormal;
 
-    private void Awake()
+    private void Start()
     {
         _minNormalY = Mathf.Cos(properties.maxGroundAngle * Mathf.Deg2Rad);
     }
 
-    
     private void FixedUpdate()
     {
         UpdateVelocity();    

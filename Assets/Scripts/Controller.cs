@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 // represents the player who is controlling the characters in the game
 
@@ -16,7 +17,7 @@ public class Controller : MonoBehaviour
 
     [SerializeField] 
     private float transitionDuration = 0.25f;
-    
+
     private Tweener _controllableTransition;
     
     private void Awake()
@@ -68,14 +69,21 @@ public class Controller : MonoBehaviour
         {
             Time.timeScale = 0.5f;
             currentlyControlling.SetMovementDirection(Vector2.zero);
+            currentlyControlling.body.constraints = RigidbodyConstraints.None;
+            currentlyControlling.onAttached.Invoke(false);
             currentlyControlling = obj;
-            _controllableTransition?.Kill();
+            currentlyControlling.onAttached.Invoke(true);
+            _controllableTransition?.Kill(true);
             
             _controllableTransition = controllerCamera.transform
                 .DOMove(obj.transform.position + obj.CameraOffset, transitionDuration)
                 .SetUpdate(true)
                 .SetEase(Ease.InOutSine)
-                .OnComplete(() => Time.timeScale = 1f);
+                .OnComplete(() =>
+                {
+                    currentlyControlling.body.constraints = RigidbodyConstraints.FreezeRotation;
+                    Time.timeScale = 1f;
+                });
         }
     }
 

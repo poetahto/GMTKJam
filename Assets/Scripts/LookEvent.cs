@@ -5,10 +5,10 @@ using UnityEngine.Events;
 public class LookEvent : MonoBehaviour
 {
     [SerializeField] 
-    private float lookStrength = 0.75f;
+    public float lookStrength = 0.75f;
 
     [SerializeField] 
-    private UnityEvent<bool> onLookChanged;
+    public UnityEvent<bool> onLookChanged = new UnityEvent<bool>();
 
     private bool _isLookedAt;
     private Camera _camera;
@@ -23,6 +23,8 @@ public class LookEvent : MonoBehaviour
         CompareDirections();
     }
 
+    public float readonlySim = 0f;
+    
     private void CompareDirections()
     {
         var cameraTransform = _camera.transform;
@@ -30,11 +32,13 @@ public class LookEvent : MonoBehaviour
         Vector3 directionToCamera = (transform.position - cameraTransform.position).normalized;
 
         float similarity = Vector3.Dot(cameraDirection, directionToCamera);
+        readonlySim = similarity;
         bool isLookedAt = similarity >= lookStrength;
 
         if (isLookedAt != _isLookedAt)
         {
             _isLookedAt = isLookedAt;
+            print(isLookedAt + " " + gameObject.name);
             onLookChanged.Invoke(isLookedAt);
         }
     }

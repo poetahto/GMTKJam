@@ -4950,6 +4950,7 @@ GameObject:
   - component: {fileID: 7465500106365138967}
   - component: {fileID: 423425721}
   - component: {fileID: 423425722}
+  - component: {fileID: 6037333992546408836}
   m_Layer: 0
   m_Name: Controllable Emitter
   m_TagString: Untagged
@@ -5063,6 +5064,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 7465500106365138967}
   properties: {fileID: 11400000, guid: 0da99d06482c33a4881b422b455e89c1, type: 2}
+  onAttached:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6037333992546408836}
+        m_TargetAssemblyTypeName: ObjectFader, Assembly-CSharp
+        m_MethodName: SetFading
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &7465500106365138967
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5091,7 +5107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6704a0a319e547e3a3e6d1b6f3caa7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCamera: {fileID: 0}
   lookStrength: 0.99
   onLookChanged:
     m_PersistentCalls:
@@ -5108,6 +5123,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  readonlySim: 0
 --- !u!114 &423425722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5122,4 +5138,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 7465500106365138970}
   duration: 1
-  intensity: 2
+  intensity: 4
+--- !u!114 &6037333992546408836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7465500106365138966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3c8074662d4ee585298219876dfb61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 7465500106365138970}
+  duration: 0.5
+  targetAlpha: 0

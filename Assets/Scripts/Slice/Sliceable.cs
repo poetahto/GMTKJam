@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class Sliceable : MonoBehaviour
 {
+    [SerializeField] 
+    private UnityEvent onSlice = new UnityEvent();
+    
     [SerializeField]
     private bool _isSolid = true;
 

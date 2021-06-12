@@ -1,30 +1,36 @@
-﻿using DG.Tweening;
+﻿using System;
+using Assets.Scripts.Slice;
+using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class ObjectHighlighter : MonoBehaviour
+public class ObjectHighlighter : MonoBehaviour, ISliceCleanup
 {
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     
     [SerializeField] 
-    private MeshRenderer meshRenderer;
+    public MeshRenderer meshRenderer;
 
     [SerializeField] 
-    private float duration;
+    public float duration;
 
     [SerializeField] 
-    private float intensity = 2f;
+    public float intensity = 2f;
 
     private Tweener _highlightAnimation;
+    private Color _initialColor;
 
-    private void Awake()
+    private void Start()
     {
-        CreateHighlightAnimation(meshRenderer.material);
+        var material = meshRenderer.material;
+
+        _initialColor = material.GetColor(EmissionColor);
+        CreateHighlightAnimation(material);
     }
 
     private void OnDestroy()
     {
-        _highlightAnimation.Kill();
+        Cleanup();
     }
 
     private void CreateHighlightAnimation(Material material)
@@ -32,12 +38,13 @@ public class ObjectHighlighter : MonoBehaviour
         _highlightAnimation = DOTween.To(
             () => material.GetColor(EmissionColor),
             value => material.SetColor(EmissionColor, value), 
-            material.color * intensity, 
+            material.GetColor(EmissionColor) * intensity, 
             1 / duration);
 
         _highlightAnimation
             .SetSpeedBased()
             .SetAutoKill(false)
+            .SetUpdate(true)
             .Pause();
     }
 
@@ -48,5 +55,11 @@ public class ObjectHighlighter : MonoBehaviour
             _highlightAnimation.PlayForward();
         
         else _highlightAnimation.PlayBackwards();
+    }
+
+    public void Cleanup()
+    {
+        _highlightAnimation.Kill();
+        meshRenderer.material.SetColor(EmissionColor, _initialColor);
     }
 }

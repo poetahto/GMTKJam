@@ -16,6 +16,9 @@ namespace Assets.Scripts.Slice
         /// <returns></returns>
         public static GameObject[] Slice(Plane plane, GameObject objectToCut)
         {
+            foreach (var needsCleanup in objectToCut.GetComponents<ISliceCleanup>())
+                needsCleanup.Cleanup();
+            
             //Get the current mesh and its verts and tris
             Mesh mesh = objectToCut.GetComponent<MeshFilter>().mesh;
             var a = mesh.GetSubMesh(0);
@@ -80,6 +83,25 @@ namespace Assets.Scripts.Slice
             if (originalCobj != null)
             {
                 ControllableObject obj = meshGameObject.AddComponent<ControllableObject>();
+                
+                // ---- FADER SETUP ----
+                ObjectFader fader = meshGameObject.AddComponent<ObjectFader>();
+                fader.targetAlpha = 0;
+                fader.duration = 0.5f;
+                fader.targetRenderer = meshGameObject.GetComponent<MeshRenderer>();
+                obj.onAttached.AddListener(fader.SetFading);
+                // ---------------------
+                
+                // ---- HIGHLIGHTER SETUP ----
+                ObjectHighlighter highlighter = meshGameObject.AddComponent<ObjectHighlighter>();
+                highlighter.duration = 0.5f;
+                highlighter.intensity = 4f;
+                highlighter.meshRenderer = meshGameObject.GetComponent<MeshRenderer>();
+                var lookEvent = meshGameObject.AddComponent<LookEvent>();
+                lookEvent.lookStrength = 0.99f;
+                lookEvent.onLookChanged.AddListener(highlighter.SetHighlighted);
+                // ---- HIGHLIGHTER SETUP ----
+                
                 obj.properties = originalCobj.properties;
                 Rigidbody rb = meshGameObject.AddComponent<Rigidbody>();
                 rb.mass = originalCobj.body.mass * 0.7F;
@@ -90,6 +112,7 @@ namespace Assets.Scripts.Slice
                 if (originalrb != null)
                 {
                     Rigidbody rb = meshGameObject.AddComponent<Rigidbody>();
+                    rb.interpolation = RigidbodyInterpolation.Interpolate;
                     rb.mass = originalrb.mass * 0.7F;
                 }
             }
