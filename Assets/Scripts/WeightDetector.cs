@@ -1,44 +1,90 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class WeightDetector : MonoBehaviour
 {
-    [Serializable]
-    public class ActivationChangeEvent : UnityEvent<bool> {}
-    
     [SerializeField]
-    private ActivationChangeEvent onActivationChange;
+    private UnityEvent<bool> onActivationChange;
 
     [SerializeField]
     private float maxWeightThreshold;
+
+    [SerializeField] 
+    private float debounceSeconds = 0.25f;
     
     private List<GameObject> _objectsDetected = new List<GameObject>();
-    public IReadOnlyList<GameObject> ObjectDetected => _objectsDetected;
-    
+    private Dictionary<GameObject, Coroutine> _debouncingObjects = new Dictionary<GameObject, Coroutine>();
+
     private bool _isActive;
-    public bool ThresholdAchieved => WeightDetected >= maxWeightThreshold;
-    public float WeightDetected { get; private set; }
+    private bool ThresholdAchieved => WeightDetected >= maxWeightThreshold;
+    private float WeightDetected { get; set; }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.rigidbody != null && Vector3.Dot(transform.up, collision.GetContact(0).normal) < 0)
+        if (ObjectIsDebouncing(collision.gameObject))
         {
-            WeightDetected += collision.rigidbody.mass;
-            _objectsDetected.Add(collision.gameObject);
-            UpdateActiveState();
+            FinishDebounce(collision.gameObject);
         }
+        else if (ShouldAddWeigher(collision))
+        {
+            AddWeigher(collision.rigidbody);
+        }
+    }
+    
+    private bool ObjectIsDebouncing(GameObject obj)
+    {
+        return _debouncingObjects.ContainsKey(obj);
+    }
+
+    private void FinishDebounce(GameObject obj)
+    {
+        StopCoroutine(_debouncingObjects[obj]);
+        _debouncingObjects.Remove(obj);
+    }
+
+    private bool ShouldAddWeigher(Collision collision)
+    {
+        return collision.rigidbody != null && Vector3.Dot(transform.up, collision.GetContact(0).normal) < 0;
+    }
+
+    private void AddWeigher(Rigidbody rb)
+    {
+        WeightDetected += rb.mass;
+        _objectsDetected.Add(rb.gameObject);
+        UpdateActiveState();
     }
     
     private void OnCollisionExit(Collision collision)
     {
-        if (_objectsDetected.Contains(collision.gameObject))
-        {
-            WeightDetected -= collision.rigidbody.mass;
-            _objectsDetected.Remove(collision.gameObject);
-            UpdateActiveState();
-        }
+        if (ShouldRemoveWeigher(collision.gameObject))
+            StartDebounce(collision);
+    }
+
+    private bool ShouldRemoveWeigher(GameObject obj)
+    {
+        return _objectsDetected.Contains(obj);
+    }
+
+    private void StartDebounce(Collision collision)
+    {
+        var removingCoroutine = StartCoroutine(WaitRemoveWeigher(collision.rigidbody));
+        _debouncingObjects.Add(collision.gameObject, removingCoroutine);
+    }
+
+    private IEnumerator WaitRemoveWeigher(Rigidbody rb)
+    {
+        yield return new WaitForSeconds(debounceSeconds);
+        _debouncingObjects.Remove(rb.gameObject);
+        RemoveWeigher(rb);
+    }
+
+    private void RemoveWeigher(Rigidbody rb)
+    {
+        WeightDetected -= rb.mass;
+        _objectsDetected.Remove(rb.gameObject);
+        UpdateActiveState();
     }
 
     private void UpdateActiveState()
@@ -47,7 +93,6 @@ public class WeightDetector : MonoBehaviour
         {
             onActivationChange.Invoke(ThresholdAchieved);
             _isActive = ThresholdAchieved;
-            print("is active: " + _isActive);
         }
     }
 }

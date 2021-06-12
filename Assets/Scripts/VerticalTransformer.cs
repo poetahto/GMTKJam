@@ -6,6 +6,7 @@ using NaughtyAttributes;
 
 public class VerticalTransformer : MonoBehaviour
 {
+    public Rigidbody targetRigidbody;
     public float time = 1f;
     public Ease ease;
     public float defaultVertical;
@@ -19,7 +20,7 @@ public class VerticalTransformer : MonoBehaviour
     {
         open = false;
         initialPosition = gameObject.transform.position;
-        defaultVertical = gameObject.transform.localScale.y;
+        // defaultVertical = gameObject.transform.localScale.y;
     }
 
     // Update is called once per frame
@@ -37,6 +38,17 @@ public class VerticalTransformer : MonoBehaviour
         } else
         {
             OpenDoor();
+        }
+    }
+
+    public void SetOpen(bool isOpen)
+    {
+        if (isOpen)
+        {
+            OpenDoor();
+        } else
+        {
+            CloseDoor();
         }
     }
 
