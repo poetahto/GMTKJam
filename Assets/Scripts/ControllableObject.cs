@@ -45,15 +45,9 @@ public class ControllableObject : MonoBehaviour
         UpdateVelocity();    
     }
 
-    public void SetMovementDirection(Vector2 direction)
+    public void SetMovementDirection(Vector3 direction)
     {
-        Transform objectTransform = transform;
-        
-        direction.Normalize();
-        Vector3 forwardMovement = objectTransform.forward * direction.x;
-        Vector3 sidewaysMovement = objectTransform.right * direction.y;       
-        
-        _desiredVelocity = (forwardMovement + sidewaysMovement) * properties.maxSpeed;
+        _desiredVelocity = direction * properties.maxSpeed;
     }
 
     public void TryToJump() => _desiredJump = true;

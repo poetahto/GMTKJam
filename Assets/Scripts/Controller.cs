@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
 
 // represents the player who is controlling the characters in the game
 
@@ -18,23 +17,33 @@ public class Controller : MonoBehaviour
     [SerializeField] 
     private float transitionDuration = 0.25f;
 
+    private RigidbodyConstraints _savedConstraints;
     private Tweener _controllableTransition;
+    private Vector3 _flatForward;
     
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
-
+        
         if (currentlyControlling != null)
         {
             transform.position = currentlyControlling.objectRenderer.bounds.center + currentlyControlling.CameraOffset;
+            _savedConstraints = currentlyControlling.body.constraints;
             AttachTo(currentlyControlling);
         }
     }
 
     private void Update()
     {
-        HandleMouseInput();
+        HandleMouseInput(!_controllableTransition.IsActive());
 
+        var flatForward = transform.forward;
+        flatForward.y = 0;
+        flatForward.Normalize();
+        
+        if (flatForward != Vector3.zero)
+            _flatForward = flatForward;
+        
         if (!_controllableTransition.IsActive())
         {
             UpdateCameraPos();
@@ -47,8 +56,15 @@ public class Controller : MonoBehaviour
         Vector2 playerInput;
         playerInput.x = Input.GetAxisRaw("Vertical");
         playerInput.y = Input.GetAxisRaw("Horizontal");
+        playerInput.Normalize();
+
+        var playerTransform = transform;
         
-        currentlyControlling.SetMovementDirection(playerInput);
+        
+        
+        Vector3 forwardMovement = _flatForward * playerInput.x;
+        Vector3 sidewaysMovement = playerTransform.right * playerInput.y;
+        currentlyControlling.SetMovementDirection(forwardMovement + sidewaysMovement);
         
         if (Input.GetButtonDown("Jump"))
             currentlyControlling.TryToJump();
@@ -69,7 +85,7 @@ public class Controller : MonoBehaviour
         {
             Time.timeScale = 0.5f;
             currentlyControlling.SetMovementDirection(Vector2.zero);
-            currentlyControlling.body.constraints = RigidbodyConstraints.None;
+            currentlyControlling.body.constraints = _savedConstraints;
             currentlyControlling.onAttached.Invoke(false);
             currentlyControlling = obj;
             currentlyControlling.onAttached.Invoke(true);
@@ -81,6 +97,7 @@ public class Controller : MonoBehaviour
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>
                 {
+                    _savedConstraints = currentlyControlling.body.constraints;
                     currentlyControlling.body.constraints = RigidbodyConstraints.FreezeRotation;
                     Time.timeScale = 1f;
                 });
@@ -112,7 +129,7 @@ public class Controller : MonoBehaviour
 
         transform.position = cameraPos;
     }
-    private void HandleMouseInput()
+    private void HandleMouseInput(bool rotateTarget)
     {
         // calculate new rotation from mouse input and sensitivity
         Vector3 localEulerAngles = transform.localEulerAngles;
@@ -120,20 +137,22 @@ public class Controller : MonoBehaviour
         float newRotationX = localEulerAngles.x - Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         // clamp X rotation to between 0-90 and 270-360 because euler angles wrap at 0
-        if (newRotationX > 90 && newRotationX < 270)
+        if (newRotationX > 89 && newRotationX < 271)
         {
             if (newRotationX < 180)
             {
-                newRotationX = 90;
+                newRotationX = 89;
             }
             else if (newRotationX > 180)
             {
-                newRotationX = 270;
+                newRotationX = 271;
             }
         }
 
         // update local rotation with the values we calculated, no z because we dont want to pitch or roll
-        currentlyControlling.transform.localEulerAngles = new Vector3(0f, newRotationY, 0f);
+        var oldAngles = currentlyControlling.transform.localEulerAngles;
+        if (rotateTarget)
+            currentlyControlling.transform.localEulerAngles = new Vector3(oldAngles.x, newRotationY, oldAngles.z);
         controllerCamera.transform.localEulerAngles = new Vector3(newRotationX, newRotationY, 0f);
     }
 }

@@ -108,6 +108,8 @@ namespace Assets.Scripts.Slice
                 obj.properties = originalCobj.properties;
                 Rigidbody rb = meshGameObject.AddComponent<Rigidbody>();
                 rb.mass = originalCobj.body.mass * 0.7F;
+                rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+                rb.interpolation = RigidbodyInterpolation.Interpolate;
                 obj.body = rb;
             } else
             {
@@ -115,7 +117,6 @@ namespace Assets.Scripts.Slice
                 if (originalrb != null)
                 {
                     Rigidbody rb = meshGameObject.AddComponent<Rigidbody>();
-                    rb.interpolation = RigidbodyInterpolation.Interpolate;
                     rb.mass = originalrb.mass * 0.7F;
                 }
             }

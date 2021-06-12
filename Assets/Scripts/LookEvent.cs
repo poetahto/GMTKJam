@@ -38,7 +38,6 @@ public class LookEvent : MonoBehaviour
         if (isLookedAt != _isLookedAt)
         {
             _isLookedAt = isLookedAt;
-            print(isLookedAt + " " + gameObject.name);
             onLookChanged.Invoke(isLookedAt);
         }
     }
