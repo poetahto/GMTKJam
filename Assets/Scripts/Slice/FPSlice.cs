@@ -88,8 +88,6 @@ namespace Assets.Scripts.Slice
                 Debug.Log("found vectors");
                 _initialHead = controllerCamera.transform.position;
                 _base = _initialHead + (controllerCamera.transform.forward * defaultDistance);
-
-                Debug.DrawLine(_initialHead, _base, Color.red, 1000);
             }
 
             if (_victim == null)

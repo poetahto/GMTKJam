@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using NaughtyAttributes;
 
 public class VerticalTransformer : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class VerticalTransformer : MonoBehaviour
     private float displacement;
 
     private Tweener _doorAnimation;
+    private bool o = false;
 
     private void Awake()
     {
@@ -32,5 +34,12 @@ public class VerticalTransformer : MonoBehaviour
             _doorAnimation.PlayForward();
         
         else _doorAnimation.PlayBackwards();
+    }
+
+    [Button]
+    private void Open()
+    {
+        o = !o;
+        SetOpen(o);
     }
 }
