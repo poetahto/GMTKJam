@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3c8074662d4ee585298219876dfb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRenderer: {fileID: 6722907866312033926}
+  targetRenderers:
+  - {fileID: 6722907866312033926}
   duration: 0.5
   targetAlpha: 0

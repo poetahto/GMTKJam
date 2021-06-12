@@ -13,7 +13,7 @@ public class ObjectFader : MonoBehaviour
     [SerializeField] 
     public float targetAlpha;
 
-    private Sequence _fadeSequence;
+    private Tweener[] _fadeSequences;
 
     private void Awake()
     {
@@ -22,21 +22,22 @@ public class ObjectFader : MonoBehaviour
 
     private void OnDestroy()
     {
-        _fadeSequence.Kill();
+        foreach (var fadeSequence in _fadeSequences)
+            fadeSequence.Kill();    
     }
 
     private void CreateFadeAnimation()
     {
-        _fadeSequence = DOTween.Sequence();
-
-        foreach (var targetRenderer in targetRenderers)
+        _fadeSequences = new Tweener[targetRenderers.Length];
+        
+        for (int i = 0; i < _fadeSequences.Length; i++)
         {
-            _fadeSequence.Join(targetRenderer.material
-                .DOFade(targetAlpha, 1 / duration)
-                .SetSpeedBased()
-                .SetAutoKill(false)
-                .SetUpdate(true)
-                .Pause());
+            _fadeSequences[i] = targetRenderers[i].material
+                    .DOFade(targetAlpha, 1 / duration)
+                    .SetSpeedBased()
+                    .SetUpdate(true)
+                    .SetAutoKill(false)
+                    .Pause();
         }
     }
 
@@ -44,8 +45,12 @@ public class ObjectFader : MonoBehaviour
     public void SetFading(bool fading)
     {
         if (fading)
-            _fadeSequence.PlayForward();
+        {
+            foreach (var fadeSequence in _fadeSequences)
+                fadeSequence.PlayForward();
+        }
         
-        else _fadeSequence.PlayBackwards();
+        else foreach (var fadeSequence in _fadeSequences)
+            fadeSequence.PlayBackwards();
     }
 }
