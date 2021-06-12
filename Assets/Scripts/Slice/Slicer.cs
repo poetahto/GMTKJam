@@ -76,11 +76,26 @@ namespace Assets.Scripts.Slice
             meshGameObject.tag = originalObject.tag;
 
             ControllableObject originalCobj = originalObject.GetComponent<ControllableObject>();
+
             if (originalCobj != null)
             {
                 ControllableObject obj = meshGameObject.AddComponent<ControllableObject>();
-                //update somehow?
+                obj.properties = originalCobj.properties;
+                Rigidbody rb = meshGameObject.AddComponent<Rigidbody>();
+                rb.mass = originalCobj.body.mass * 0.7F;
+                obj.body = rb;
+            } else
+            {
+                Rigidbody originalrb = originalObject.GetComponent<Rigidbody>();
+                if (originalrb != null)
+                {
+                    Rigidbody rb = meshGameObject.AddComponent<Rigidbody>();
+                    rb.mass = originalrb.mass * 0.7F;
+                }
             }
+
+
+
 
             return meshGameObject;
         }
@@ -96,7 +111,11 @@ namespace Assets.Scripts.Slice
             meshCollider.sharedMesh = mesh;
             meshCollider.convex = true;
 
-            var rb = gameObject.AddComponent<Rigidbody>();
+            var rb = gameObject.GetComponent<Rigidbody>();
+            if (rb == null)
+            {
+                rb = gameObject.AddComponent<Rigidbody>();
+            }
             rb.useGravity = useGravity;
         }
     }

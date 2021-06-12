@@ -12,10 +12,10 @@ using UnityEngine;
 public class ControllableObject : MonoBehaviour
 {
     [SerializeField]
-    private Rigidbody body;
+    public Rigidbody body;
 
     [SerializeField] 
-    private ControllableProperties properties;
+    public ControllableProperties properties;
 
     private bool OnGround => _groundContactCount > 0;
     public Vector3 Velocity => body.velocity;

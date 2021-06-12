@@ -32,9 +32,15 @@ namespace Assets.Scripts.Slice
             float defaultDistance = 6;
             if (!Input.GetMouseButton(1))
             {
-                if (_initialHead == Vector3.zero || _victim == null) return;
+                if (_initialHead == Vector3.zero || _victim == null)
+                {
+                    _initialHead = Vector3.zero;
+                    _victim = null;
+                    _base = Vector3.zero;
+                    return;
+                }
                 Debug.Log("cutting...");
-                Vector3 finalPos = controllerCamera.transform.position * defaultDistance;
+                Vector3 finalPos = controllerCamera.transform.position + (controllerCamera.transform.forward * defaultDistance);
 
                 //Create a triangle between the tip and base so that we can get the normal
                 Vector3 side1 = finalPos - _base;
@@ -81,7 +87,9 @@ namespace Assets.Scripts.Slice
             {
                 Debug.Log("found vectors");
                 _initialHead = controllerCamera.transform.position;
-                _base = _initialHead * defaultDistance;
+                _base = _initialHead + (controllerCamera.transform.forward * defaultDistance);
+
+                Debug.DrawLine(_initialHead, _base, Color.red, 1000);
             }
 
             if (_victim == null)
