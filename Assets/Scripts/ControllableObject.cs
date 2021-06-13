@@ -1,4 +1,4 @@
-using System;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +12,22 @@ using UnityEngine.Events;
 
 public class ControllableObject : MonoBehaviour
 {
+    [EventRef, SerializeField] private string jumpSound;
+    [EventRef, SerializeField] private string stepSound;
+    [SerializeField] private float stepDistance;
+    private float _currentStepDistance;
+
+    private void UpdateStepDistance()
+    {
+        _currentStepDistance -= Time.deltaTime;
+
+        if (_currentStepDistance <= 0)
+        {
+            RuntimeManager.PlayOneShot(stepSound);
+            _currentStepDistance = stepDistance;
+        }
+    }
+    
     [SerializeField]
     public Rigidbody body;
 
@@ -70,6 +86,9 @@ public class ControllableObject : MonoBehaviour
 
         // Update rigidbody velocity to match our local velocity variable
         body.velocity = _velocity;
+        
+        if (OnGround && _desiredVelocity != Vector3.zero)
+            UpdateStepDistance();
 
         // Reset player state so it can be re-calculated in the next physics tick
         ClearState();
@@ -129,6 +148,9 @@ public class ControllableObject : MonoBehaviour
             // Add our jump speed to our velocity, scaled away from our contact normal
             _velocity += _contactNormal * jumpSpeed;
             _usedJumps++;
+            
+            if (jumpSpeed > 0)
+                RuntimeManager.PlayOneShot(jumpSound);
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
+    [EventRef, SerializeField] private string attachSound;
+    
     [Range(1f, 10f), SerializeField] 
     private float mouseSensitivity = 3f;
 
@@ -41,8 +44,6 @@ public class Controller : MonoBehaviour
             _savedConstraints = currentlyControlling.body.constraints;
             AttachTo(currentlyControlling);
         }
-
-        
     }
 
     private void Update()
@@ -120,6 +121,7 @@ public class Controller : MonoBehaviour
     {
         if (obj != null)
         {
+            RuntimeManager.PlayOneShot(attachSound);
             Time.timeScale = 0.5f;
             currentlyControlling.gameObject.layer = 0;
             currentlyControlling.SetMovementDirection(Vector2.zero);

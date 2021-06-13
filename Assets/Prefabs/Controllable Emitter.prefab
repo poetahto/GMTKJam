@@ -5062,6 +5062,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691bf9f10bf1a474a88ef98cccb07bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSound: event:/Jump
+  stepSound: event:/Footstep
+  stepDistance: 0.5
   body: {fileID: 7465500106365138967}
   properties: {fileID: 11400000, guid: 0da99d06482c33a4881b422b455e89c1, type: 2}
   objectRenderer: {fileID: 7465500106365138970}
@@ -5152,6 +5155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3c8074662d4ee585298219876dfb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRenderer: {fileID: 7465500106365138970}
+  targetRenderers: []
   duration: 0.5
   targetAlpha: 0

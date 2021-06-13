@@ -129,6 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691bf9f10bf1a474a88ef98cccb07bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSound: event:/Jump
+  stepSound: event:/Footstep
+  stepDistance: 0.5
   body: {fileID: 6722907866312033923}
   properties: {fileID: 11400000, guid: 0da99d06482c33a4881b422b455e89c1, type: 2}
   objectRenderer: {fileID: 6722907866312033926}

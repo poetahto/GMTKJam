@@ -1,9 +1,13 @@
 using UnityEngine;
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 
 public class VerticalTransformer : MonoBehaviour
 {
+    [SerializeField] private bool shouldPlaySound;
+    [EventRef, SerializeField] private string movementSound; 
+    
     [SerializeField]
     private float duration = 1f;
     
@@ -33,6 +37,9 @@ public class VerticalTransformer : MonoBehaviour
             _doorAnimation.PlayForward();
         
         else _doorAnimation.PlayBackwards();
+
+        if (shouldPlaySound && open)
+            RuntimeManager.PlayOneShotAttached(movementSound, gameObject);
     }
 
     [Button]

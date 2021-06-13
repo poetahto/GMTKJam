@@ -870,6 +870,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799e5234debb8d45ae3e6e90c9f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldPlaySound: 0
+  movementSound: 
   duration: 0.25
   ease: 1
   displacement: 4
@@ -2132,6 +2134,10 @@ PrefabInstance:
       propertyPath: fadeScreen
       value: 
       objectReference: {fileID: 889398237}
+    - target: {fileID: 5585064395041819463, guid: d59d7817e8b25ed4f8716dc42f8480c4, type: 3}
+      propertyPath: attachSound
+      value: event:/Powerup 135
+      objectReference: {fileID: 0}
     - target: {fileID: 5585064395041819463, guid: d59d7817e8b25ed4f8716dc42f8480c4, type: 3}
       propertyPath: escapeHoldTime
       value: 1
@@ -9647,6 +9653,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799e5234debb8d45ae3e6e90c9f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldPlaySound: 0
+  movementSound: 
   duration: 0.25
   ease: 1
   displacement: 5
@@ -23043,6 +23051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799e5234debb8d45ae3e6e90c9f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldPlaySound: 0
+  movementSound: 
   duration: 1
   ease: 1
   displacement: 11

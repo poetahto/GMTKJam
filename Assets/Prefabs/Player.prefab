@@ -129,7 +129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1643bb8b70ec4c898e606c71ff880165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attachSound: event:/Powerup 135
   mouseSensitivity: 2
   controllerCamera: {fileID: 5585064395041819466}
+  playerLayer: 0
   currentlyControlling: {fileID: 0}
   transitionDuration: 0.5
+  mainMenu: Main Menu
+  escapeHoldTime: 5
+  fadeScreen: {fileID: 0}
+  fadeIntroScreen: {fileID: 0}

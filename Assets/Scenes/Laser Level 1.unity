@@ -919,7 +919,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh298220
+  m_Name: pb_Mesh21622
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4578,7 +4578,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1094670
+  m_Name: pb_Mesh-1454
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4906,7 +4906,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1094570
+  m_Name: pb_Mesh-1354
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4917,8 +4917,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 960
     localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
+      m_Center: {x: 0, y: 0.59, z: 0}
+      m_Extent: {x: 0.59, y: 0.59, z: 0.59}
   m_Shapes:
     vertices: []
     shapes: []
@@ -9431,6 +9431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799e5234debb8d45ae3e6e90c9f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldPlaySound: 1
+  movementSound: event:/DoorOpen
   duration: 0.25
   ease: 1
   displacement: 3.1
@@ -10548,6 +10550,25 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &1202666909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5585064395041819464, guid: e3cce648f42dd4a4da7d914f2e66c6fc, type: 3}
+  m_PrefabInstance: {fileID: 226757547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1202666910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202666909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!1 &1273314227
 GameObject:
   m_ObjectHideFlags: 0
@@ -11838,6 +11859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799e5234debb8d45ae3e6e90c9f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldPlaySound: 1
+  movementSound: event:/DoorOpen
   duration: 0.25
   ease: 1
   displacement: 3.6
@@ -17787,7 +17810,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh298532
+  m_Name: pb_Mesh21934
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19918,6 +19941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799e5234debb8d45ae3e6e90c9f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldPlaySound: 1
+  movementSound: event:/DoorOpen
   duration: 0.25
   ease: 1
   displacement: 5.1
@@ -19975,7 +20000,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

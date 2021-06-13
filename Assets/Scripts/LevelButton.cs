@@ -1,10 +1,15 @@
 ﻿using DG.Tweening;
+using FMODUnity;
+using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelButton : MonoBehaviour
 {
+    [EventRef, SerializeField] private string hoverEnterSound;
+    [SerializeField] private Music menuMusic;
+    
     [SerializeField] private bool enableOnAwake;
     [SerializeField] private CanvasGroup group;
     [SerializeField] private CanvasGroup levelStartFade;
@@ -43,21 +48,27 @@ public class LevelButton : MonoBehaviour
         group.DOFade(1, fadeTime);
     }
 
+    [PublicAPI]
     public async void OnClick()
     {
         levelStartFade.interactable = true;
         levelStartFade.blocksRaycasts = true;
+        StartCoroutine(menuMusic.FadeOut());
+        
         await levelStartFade.DOFade(1, 0.5f).AsyncWaitForCompletion();
 
         DOTween.KillAll();
         SceneManager.LoadScene(targetScene);
     }
 
+    [PublicAPI]
     public void OnEnter()
     {
         _hoverAnimation.PlayForward();
+        RuntimeManager.PlayOneShot(hoverEnterSound);
     }
 
+    [PublicAPI]
     public void OnExit()
     {
         _hoverAnimation.PlayBackwards();
