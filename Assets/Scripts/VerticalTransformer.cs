@@ -29,7 +29,6 @@ public class VerticalTransformer : MonoBehaviour
 
     public void SetOpen(bool open)
     {
-        print(open);
         if (open)
             _doorAnimation.PlayForward();
         

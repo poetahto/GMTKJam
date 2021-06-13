@@ -97,7 +97,10 @@ public class Controller : MonoBehaviour
             currentlyControlling.onAttached.Invoke(true);
             _controllableTransition?.Kill(true);
             currentlyControlling.gameObject.layer = playerLayer;
-            
+
+            for (int i = 0; i < currentlyControlling.transform.childCount; i++)
+                currentlyControlling.transform.GetChild(i).gameObject.layer = playerLayer;
+
             _controllableTransition = controllerCamera.transform
                 .DOMove(obj.objectRenderer.bounds.center + obj.CameraOffset, transitionDuration)
                 .SetUpdate(true)
@@ -117,7 +120,8 @@ public class Controller : MonoBehaviour
 
         Vector3 cameraPos = controllerCamera.transform.position;
         Vector3 controllerPos = currentlyControlling.objectRenderer.bounds.center;
-        float velocityChange = Mathf.Max(currentlyControlling.Velocity.magnitude * Time.deltaTime, 0.1f);
+        // float velocityChange = Mathf.Max(currentlyControlling.Velocity.magnitude * Time.deltaTime, 0.1f);
+        float velocityChange = currentlyControlling.Velocity.magnitude * Time.deltaTime;
         
         cameraPos.x = Mathf.MoveTowards(
             cameraPos.x, 

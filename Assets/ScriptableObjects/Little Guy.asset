@@ -18,4 +18,4 @@ MonoBehaviour:
   airAcceleration: 8
   maxAirJumps: 2
   jumpHeight: 1
-  maxGroundAngle: 30
+  maxGroundAngle: 60
