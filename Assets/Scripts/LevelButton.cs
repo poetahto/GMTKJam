@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using DG.Tweening;
+﻿using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelButton : MonoBehaviour
 {
+    [SerializeField] private bool enableOnAwake;
     [SerializeField] private CanvasGroup group;
     [SerializeField] private CanvasGroup levelStartFade;
     [SerializeField] private float fadeTime = 1f;
@@ -26,6 +26,9 @@ public class LevelButton : MonoBehaviour
             .SetUpdate(true)
             .SetAutoKill(false)
             .Pause();
+        
+        if (enableOnAwake)
+            Enable();
     }
 
     private void OnDestroy()

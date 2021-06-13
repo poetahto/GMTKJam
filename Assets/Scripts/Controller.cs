@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,8 +27,9 @@ public class Controller : MonoBehaviour
     private Tweener _controllableTransition;
     private Vector3 _flatForward;
     
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
         Cursor.lockState = CursorLockMode.Locked;
         
         if (currentlyControlling != null)

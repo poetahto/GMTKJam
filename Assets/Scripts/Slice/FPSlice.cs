@@ -92,7 +92,7 @@ namespace Assets.Scripts.Slice
 
             if (_victim == null)
             {
-                if (Physics.Raycast(_initialHead, transform.TransformDirection(Vector3.forward), out var hit))
+                if (Physics.Raycast(_initialHead, transform.TransformDirection(Vector3.forward), out var hit, Mathf.Infinity,~(1 << 7)))
                 {
                     if (hit.transform.gameObject.GetComponent<Sliceable>() != null)
                     {

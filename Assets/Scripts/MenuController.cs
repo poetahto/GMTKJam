@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup instructions;
+    [SerializeField] private CanvasGroup main;
     [SerializeField] private CanvasGroup titleText;
     [SerializeField] private Image background;
     [SerializeField] private Color startColor;
     [SerializeField] private Color endColor;
     [SerializeField] private float colorShiftTime;
-    
     [SerializeField] private LevelButton[] levels;
-    
     [SerializeField] private float introDuration = 1f;
     [SerializeField] private float introHangTime = 1f;
     [SerializeField] private Vector3 postIntroTitleLocation;
@@ -21,6 +21,8 @@ public class MenuController : MonoBehaviour
     [SerializeField] private float postIntroTransitionDuration;
     [SerializeField] private float levelAppearTime = 0.1f;
 
+    private bool _instructionsOpen;
+    
     private IEnumerator Start()
     {
         background.color = startColor;
@@ -39,5 +41,31 @@ public class MenuController : MonoBehaviour
             levelButton.Enable();
             yield return new WaitForSeconds(levelAppearTime);
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape) && _instructionsOpen)
+        {
+            _instructionsOpen = false;
+            DOTween.Kill(instructions);
+            DOTween.Kill(main);
+            instructions.DOFade(0, 0.25f);
+            main.DOFade(1, 0.25f);
+        }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void OpenInstructions()
+    {
+        _instructionsOpen = true;
+        DOTween.Kill(instructions);
+        DOTween.Kill(main);
+        instructions.DOFade(1, 0.25f);
+        main.DOFade(0, 0.25f);
     }
 }
