@@ -5,7 +5,34 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 1
+    path: Assets/Scenes/ControllerTest.unity
+    guid: 749129b5111d22a49b6af5d4f119f01b
+  - enabled: 1
+    path: Assets/Scenes/CuttingTest.unity
+    guid: 1da1278d41b4c414da8ed15a94302677
+  - enabled: 1
+    path: Assets/Scenes/Default.unity
+    guid: e343042c8c004c04d9ed90f8068fd4aa
+  - enabled: 1
+    path: Assets/Scenes/Laser Level 1.unity
+    guid: 6780b067f7862f147a4295389b4476cd
+  - enabled: 1
+    path: Assets/Scenes/Lasers.unity
+    guid: 3847547739a26fd4dbfb239f36428c0e
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: 9beb50647851e24488e5ef8620d28908
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 5db88b891b78d44409f49797383917fa
+  - enabled: 1
+    path: Assets/Scenes/PressureTest.unity
+    guid: 3c0bc6159749a1d4680a1289237b9507
+  - enabled: 1
+    path: Assets/Scenes/Stairway Level.unity
+    guid: eaae7ab6c1ea6b64a9aac96fd68d80f8
   m_configObjects: {}
