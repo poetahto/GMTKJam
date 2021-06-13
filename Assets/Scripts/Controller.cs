@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // represents the player who is controlling the characters in the game
 
@@ -35,6 +36,9 @@ public class Controller : MonoBehaviour
             _savedConstraints = currentlyControlling.body.constraints;
             AttachTo(currentlyControlling);
         }
+
+        fadeIntroScreen.alpha = 1f;
+        fadeIntroScreen.DOFade(0, 0.5f);
     }
 
     private void Update()
@@ -82,7 +86,36 @@ public class Controller : MonoBehaviour
                     AttachTo(obj);
             }
         }
+
+        
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            _escapeHoldSeconds += Time.deltaTime;
+
+            if (_escapeHoldSeconds >= escapeHoldTime)
+            {
+                SceneManager.LoadScene(mainMenu);
+                Cursor.lockState = CursorLockMode.None;
+            }
+        }
+        else
+        {
+            _escapeHoldSeconds = Mathf.Max(_escapeHoldSeconds - Time.deltaTime, 0);
+        }
+        
+        fadeScreen.alpha = Mathf.Lerp(0, 1, _escapeHoldSeconds / escapeHoldTime);
     }
+
+    private void OnGUI()
+    {
+        GUILayout.Label(_escapeHoldSeconds.ToString());
+    }
+
+    private float _escapeHoldSeconds;
+    [Scene, SerializeField] private string mainMenu;
+    [SerializeField] private float escapeHoldTime = 5f;
+    [SerializeField] private CanvasGroup fadeScreen;
+    [SerializeField] private CanvasGroup fadeIntroScreen;
 
     private void AttachTo(ControllableObject obj)
     {

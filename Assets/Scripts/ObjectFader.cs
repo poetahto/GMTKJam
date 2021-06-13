@@ -13,9 +13,9 @@ public class ObjectFader : MonoBehaviour
     [SerializeField] 
     public float targetAlpha;
 
-    private Tweener[] _fadeSequences;
+    private Tweener[] _fadeSequences = new Tweener[0];
 
-    private void Start()
+    private void Awake()
     {
         CreateFadeAnimation();    
     }

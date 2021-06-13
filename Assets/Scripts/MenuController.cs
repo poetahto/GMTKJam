@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private float postIntroTitleScale;
     [SerializeField] private float postIntroTransitionDuration;
     [SerializeField] private float levelAppearTime = 0.1f;
-    
+
     private IEnumerator Start()
     {
         background.color = startColor;
