@@ -29,9 +29,12 @@ public class Controller : MonoBehaviour
     
     private IEnumerator Start()
     {
-        yield return null;
+        fadeIntroScreen.alpha = 1f;
+        fadeIntroScreen.DOFade(0, 0.5f);
         Cursor.lockState = CursorLockMode.Locked;
         
+        yield return null;
+
         if (currentlyControlling != null)
         {
             transform.position = currentlyControlling.objectRenderer.bounds.center + currentlyControlling.CameraOffset;
@@ -39,8 +42,7 @@ public class Controller : MonoBehaviour
             AttachTo(currentlyControlling);
         }
 
-        fadeIntroScreen.alpha = 1f;
-        fadeIntroScreen.DOFade(0, 0.5f);
+        
     }
 
     private void Update()
@@ -106,11 +108,6 @@ public class Controller : MonoBehaviour
         }
         
         fadeScreen.alpha = Mathf.Lerp(0, 1, _escapeHoldSeconds / escapeHoldTime);
-    }
-
-    private void OnGUI()
-    {
-        GUILayout.Label(_escapeHoldSeconds.ToString());
     }
 
     private float _escapeHoldSeconds;
